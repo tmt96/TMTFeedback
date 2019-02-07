@@ -1,22 +1,12 @@
 {
-  "extends": "tslint:recommended",
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "jsRules": {},
   "rules": {
-    "max-line-length": {
-      "options": [
-        120
-      ]
-    },
-    "new-parens": true,
-    "no-arg": true,
-    "no-bitwise": true,
-    "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": false
+    "arrow-parens": false,
+    "no-console": false,
+    "interface-name": false,
+    "no-empty-interface": false
   },
-  "jsRules": {
-    "max-line-length": {
-      "options": [
-        120
-      ]
-    }
-  }
+  "rulesDirectory": []
 }
