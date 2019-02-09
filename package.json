@@ -24,6 +24,8 @@
     "typescript-tslint-plugin": "^0.3.1"
   },
   "dependencies": {
+    "googleapis": "^37.2.0",
+    "photonkit": "^0.1.2",
     "react": "^16.8.1"
   }
 }

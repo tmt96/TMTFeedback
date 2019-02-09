@@ -1,51 +1,90 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Menu, Tray, screen } from "electron";
 import * as path from "path";
+import { google } from "googleapis";
 
-let mainWindow: Electron.BrowserWindow;
+const TRAY_ARROW_HEIGHT = 50;
+const WINDOW_WIDTH = 300;
+const WINDOW_HEIGHT = 200;
+const HORIZ_PADDING = 15;
+const VERT_PADDING = 15;
 
-function createWindow() {
+let mainWindow: BrowserWindow;
+let trayIcon: Tray;
+
+function createWindow(): BrowserWindow {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+  let window = new BrowserWindow({
+    frame: false,
+    height: WINDOW_HEIGHT,
+    resizable: false,
+    show: false,
+    transparent: false,
+    width: WINDOW_WIDTH
   });
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, "../index.html"));
+  window.loadFile(path.join(__dirname, "../index.html"));
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
-
-  // Emitted when the window is closed.
-  mainWindow.on("closed", () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null;
+  window.on("closed", () => {
+    window = null;
   });
+
+  window.on("blur", () => {
+    window.hide();
+  });
+
+  return window;
+}
+
+function createTray(iconPath: string): Tray {
+  const tray = new Tray(iconPath);
+  tray.setToolTip("Give feedback here!");
+  tray.on("click", () => onIconClick(mainWindow));
+  return tray;
+}
+
+function onIconClick(window: BrowserWindow): void {
+  const cursorPosition = screen.getCursorScreenPoint();
+  const primarySize = screen.getPrimaryDisplay().workAreaSize;
+  const trayPositionVert =
+    cursorPosition.y >= primarySize.height / 2 ? "bottom" : "top";
+  const trayPositionHoriz =
+    cursorPosition.x >= primarySize.width / 2 ? "right" : "left";
+  window.setPosition(getTrayPosX(), getTrayPosY());
+  window.isVisible() ? window.hide() : window.show();
+
+  function getTrayPosX() {
+    const horizBounds = {
+      left: cursorPosition.x - WINDOW_WIDTH / 2,
+      right: cursorPosition.x + WINDOW_WIDTH / 2
+    };
+    if (trayPositionHoriz === "left") {
+      return horizBounds.left <= HORIZ_PADDING
+        ? HORIZ_PADDING
+        : horizBounds.left;
+    } else {
+      return horizBounds.right >= primarySize.width
+        ? primarySize.width - HORIZ_PADDING - WINDOW_WIDTH
+        : horizBounds.right - WINDOW_WIDTH;
+    }
+  }
+  function getTrayPosY() {
+    return trayPositionVert === "bottom"
+      ? cursorPosition.y - WINDOW_HEIGHT - VERT_PADDING
+      : cursorPosition.y + VERT_PADDING;
+  }
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", () => {
+  mainWindow = createWindow();
+  trayIcon = createTray(path.join(__dirname, "..", "assets", "writing.png"));
+});
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
-
-app.on("activate", () => {
-  // On OS X it"s common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
