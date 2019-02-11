@@ -3,8 +3,8 @@ import * as path from "path";
 import { google } from "googleapis";
 
 const TRAY_ARROW_HEIGHT = 50;
-const WINDOW_WIDTH = 300;
-const WINDOW_HEIGHT = 200;
+const WINDOW_WIDTH = 600;
+const WINDOW_HEIGHT = 400;
 const HORIZ_PADDING = 15;
 const VERT_PADDING = 15;
 
@@ -22,7 +22,7 @@ function createWindow(): BrowserWindow {
     width: WINDOW_WIDTH
   });
 
-  window.loadFile(path.join(__dirname, "../index.html"));
+  window.loadFile(path.join(__dirname, "..", "index.html"));
 
   window.on("closed", () => {
     window = null;

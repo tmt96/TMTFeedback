@@ -1,0 +1,16 @@
+body {
+  text-align: center;
+  overflow: scroll;
+}
+
+.form {
+  font-size: large;
+}
+
+.radio label {
+  font-size: large;
+}
+
+.form-group input[type="text"] {
+  width: 80%;
+}

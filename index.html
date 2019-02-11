@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="node_modules/photonkit/dist/css/photon.css" />
+    <link rel="stylesheet" href="assets/index.css" />
+    <title>Chào Vân</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>
+    <h3>Vân có điều gì muốn nhắn nhủ tôi</h3>
+    <form class="form" action="">
+      <div class="form-group">
+        <p>Vân yêu TMT không?</p>
+        <div class="radio">
+          <label> <input type="radio" id="love" name="is_loved" /> ❤️ </label>
+          <label>
+            <input type="radio" id="not_love" name="is_loved" /> 💩
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <p>Two</p>
+        <input type="text" id="two" name="two" maxlength="140" />
+      </div>
+      <div class="form-group">
+        <p>Three</p>
+        <input type="text" id="three" name="three" maxlength="140" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-form btn-primary">
+          Send
+        </button>
+      </div>
+    </form>
   </body>
 
   <script>
     // You can also require other files to run in this process
-    require('./dist/renderer.js')
+    require("./dist/renderer.js");
   </script>
 </html>
