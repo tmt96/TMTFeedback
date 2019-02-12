@@ -1,6 +1,5 @@
-import { app, BrowserWindow, Menu, Tray, screen } from "electron";
+import { app, BrowserWindow, Menu, screen, Tray } from "electron";
 import * as path from "path";
-import { google } from "googleapis";
 
 const TRAY_ARROW_HEIGHT = 50;
 const WINDOW_WIDTH = 600;

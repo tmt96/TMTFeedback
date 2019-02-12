@@ -4,11 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="node_modules/photonkit/dist/css/photon.css" />
     <link rel="stylesheet" href="assets/index.css" />
+    <script>
+      var exports = {};
+    </script>
+    <script src="dist/utils.js"></script>
     <title>Chào Vân</title>
   </head>
+
   <body>
     <h3>Vân có điều gì muốn nhắn nhủ tôi</h3>
-    <form class="form" action="">
+    <form class="form" action="" onsubmit="sendMail()">
       <div class="form-group">
         <p>Vân yêu TMT không?</p>
         <div class="radio">
