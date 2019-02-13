@@ -3,8 +3,16 @@ body {
   overflow: scroll;
 }
 
+.message {
+  overflow: visible;
+  font-size: x-large;
+  font-weight: bold;
+}
+
 .form {
   font-size: large;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .radio label {
